@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Smart Hostel App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#121212">
+</head>
+
+<body>
+
+    <!-- APP CONTAINER FOR MOBILE FEEL -->
+    <div id="app-container">
+
+        <!-- LOGIN PAGE -->
+        <div id="loginPage" class="page active">
+            <div class="header-banner">
+                <h1 class="main-title">Smart Hostel Mess</h1>
+                <p class="subtitle">Welcome Back</p>
+            </div>
+            <div class="card fade-in">
+                <h2>Login</h2>
+                <div class="input-group">
+                    <input type="text" id="loginUsername" placeholder="Username">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                </div>
+                <button class="primary-btn" onclick="login()">Login</button>
+                <p class="switch">Don't have an account?
+                    <span onclick="showSignup()">Sign Up</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- SIGNUP PAGE -->
+        <div id="signupPage" class="page">
+            <div class="header-banner">
+                <h1 class="main-title">Join Mess</h1>
+                <p class="subtitle">Create Account</p>
+            </div>
+            <div class="card slide-up">
+                <div class="input-group">
+                    <input type="text" id="signupName" placeholder="Full Name">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="signupUsername" placeholder="Username">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signupPassword" placeholder="Password">
+                </div>
+                <div class="input-group">
+                    <select id="signupRole">
+                        <option value="student">Student</option>
+                        <option value="cook">Cook</option>
+                    </select>
+                </div>
+                <button class="primary-btn" onclick="signup()">Sign Up</button>
+                <p class="switch">Already have an account?
+                    <span onclick="showLogin()">Login</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- STUDENT DASHBOARD -->
+        <div id="studentPage" class="page">
+            <div class="app-header">
+                <h1 class="dashboard-title">Student Panel</h1>
+                <button class="icon-btn logout text-danger" onclick="logout()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="scrollable-content">
+                <div class="profile-summary glass-card">
+                    <div class="avatar-circle">🎓</div>
+                    <div class="profile-info">
+                        <p id="studentWelcome"></p>
+                        <p class="coins">🪙 Coins: <span id="coinCount" class="highlight-text">0</span></p>
+                    </div>
+                </div>
+
+                <div class="box glass-card">
+                    <h2 class="section-title">🍛 Today's Menu</h2>
+                    <div class="menu-list">
+                        <div class="menu-item"><span class="meal-label">Breakfast</span><span id="breakfastMenu"
+                                class="meal-val">Not Updated</span></div>
+                        <div class="menu-item"><span class="meal-label">Lunch</span><span id="lunchMenu"
+                                class="meal-val">Not Updated</span></div>
+                        <div class="menu-item"><span class="meal-label">Dinner</span><span id="dinnerMenu"
+                                class="meal-val">Not Updated</span></div>
+                    </div>
+                </div>
+
+                <div class="box glass-card">
+                    <h2 class="section-title">✓ Select Meals</h2>
+                    <div class="btn-group">
+                        <button class="action-btn" onclick="chooseMeal('breakfast')">Breakfast</button>
+                        <button class="action-btn" onclick="chooseMeal('lunch')">Lunch</button>
+                        <button class="action-btn" onclick="chooseMeal('dinner')">Dinner</button>
+                    </div>
+                </div>
+
+                <div class="box glass-card">
+                    <h2 class="section-title">⭐ Rate Food</h2>
+                    <div class="rating-flex">
+                        <input type="number" id="rating" min="1" max="5" placeholder="1-5 Stars">
+                        <button class="compact-btn" onclick="submitRating()">Submit</button>
+                    </div>
+                </div>
+
+                <div class="box glass-card">
+                    <h2 class="section-title">📩 Message Cook</h2>
+                    <textarea id="studentMessage" placeholder="Got an issue or suggestion?"></textarea>
+                    <button class="primary-btn w-100" onclick="sendMessage()">Send Message</button>
+
+                    <h3 class="subtitle-small mt-4">Cook Replies</h3>
+                    <div id="studentReplies" class="chat-container"></div>
+                </div>
+                <div class="spacer-bottom"></div>
+            </div>
+        </div>
+
+        <!-- COOK DASHBOARD -->
+        <div id="cookPage" class="page">
+            <div class="app-header">
+                <h1 class="dashboard-title">Cook Panel</h1>
+                <button class="icon-btn logout text-danger" onclick="logout()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="scrollable-content">
+                <div class="profile-summary glass-card">
+                    <div class="avatar-circle">👨‍🍳</div>
+                    <div class="profile-info">
+                        <p id="cookWelcome"></p>
+                        <p class="subtitle">Manage mess updates</p>
+                    </div>
+                </div>
+
+                <div class="box glass-card">
+                    <h2 class="section-title">📊 Expected Meal Count</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-val" id="countBreakfast">0</span>
+                            <span class="stat-label">Breakfast</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-val" id="countLunch">0</span>
+                            <span class="stat-label">Lunch</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-val" id="countDinner">0</span>
+                            <span class="stat-label">Dinner</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box glass-card">
+                    <h2 class="section-title">📝 Update Menu</h2>
+                    <div class="input-group"><input type="text" id="bMenu" placeholder="Breakfast Item"></div>
+                    <div class="input-group"><input type="text" id="lMenu" placeholder="Lunch Item"></div>
+                    <div class="input-group"><input type="text" id="dMenu" placeholder="Dinner Item"></div>
+                    <button class="primary-btn w-100" onclick="updateMenu()">Save Menu</button>
+                </div>
+
+                <div class="box glass-card">
+                    <h2 class="section-title">⭐ Student Ratings</h2>
+                    <div id="allRatings" class="ratings-container"></div>
+                </div>
+
+                <div class="box glass-card">
+                    <h2 class="section-title">📨 Student Messages</h2>
+                    <div id="allMessages" class="chat-container"></div>
+                </div>
+                <div class="spacer-bottom"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
