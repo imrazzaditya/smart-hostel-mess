@@ -13,22 +13,39 @@ function switchPage(id) {
     document.getElementById(id).classList.add("active");
 }
 
-function showSignup() { switchPage("signupPage"); }
+function showSignup() { 
+    switchPage("signupPage"); 
+    toggleRegNo(); 
+}
 function showLogin() { switchPage("loginPage"); }
+
+function toggleRegNo() {
+    let role = document.getElementById("signupRole").value;
+    let regNoGroup = document.getElementById("regNoGroup");
+    if (regNoGroup) {
+        regNoGroup.style.display = role === "student" ? "block" : "none";
+    }
+}
 
 // ===== SIGNUP =====
 function signup() {
     let name = document.getElementById("signupName").value;
     let username = document.getElementById("signupUsername").value;
     let password = document.getElementById("signupPassword").value;
+    let regNo = document.getElementById("signupRegNo").value;
     let role = document.getElementById("signupRole").value;
 
-    if (!name || !username || !password) {
-        alert("Please fill all fields!");
+    if (!name || !username || !password || (role === 'student' && !regNo)) {
+        alert("Please fill all required fields!");
+        return;
+    }
+    
+    if (role === 'student' && (!/^\d{8,10}$/.test(regNo))) {
+        alert("Registration number must be 8 to 10 digits!");
         return;
     }
 
-    users.push({ name, username, password, role, coins: 0 });
+    users.push({ name, username, password, regNo, role, coins: 0 });
     localStorage.setItem("users", JSON.stringify(users));
     alert("Account Created Successfully!");
     showLogin();
@@ -54,6 +71,7 @@ function login() {
     if (user.role === "student") {
         switchPage("studentPage");
         document.getElementById("studentWelcome").innerText = "Welcome, " + user.name;
+        document.getElementById("studentRegNo").innerText = user.regNo || "N/A";
         document.getElementById("coinCount").innerText = user.coins;
         loadMenu();
         loadStudentChats();

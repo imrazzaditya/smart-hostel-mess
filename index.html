@@ -49,11 +49,14 @@
                 <div class="input-group">
                     <input type="text" id="signupUsername" placeholder="Username">
                 </div>
+                <div class="input-group" id="regNoGroup">
+                    <input type="text" id="signupRegNo" placeholder="Registration No. (8-10 digits)">
+                </div>
                 <div class="input-group">
                     <input type="password" id="signupPassword" placeholder="Password">
                 </div>
                 <div class="input-group">
-                    <select id="signupRole">
+                    <select id="signupRole" onchange="toggleRegNo()">
                         <option value="student">Student</option>
                         <option value="cook">Cook</option>
                     </select>
@@ -84,6 +87,7 @@
                     <div class="avatar-circle">🎓</div>
                     <div class="profile-info">
                         <p id="studentWelcome"></p>
+                        <p class="reg-no" style="font-size: 0.9rem; color: var(--text-muted, #a0a0a0); margin: 2px 0;">Reg No: <span id="studentRegNo"></span></p>
                         <p class="coins">🪙 Coins: <span id="coinCount" class="highlight-text">0</span></p>
                     </div>
                 </div>
